@@ -1,0 +1,18 @@
+name: Waypoints
+version: '${project.version}'
+author: jule
+api-version: 1.16
+main: zoink.jule.waypoints.Waypoints
+commands:
+  wsave:
+    description: save a new waypoint
+    usage: /wsave
+  wtp:
+    description: teleport to a waypoint
+    usage: /wtp
+  wlist:
+    description: list waypoints
+    usage: /wlist
+  wdelete:
+    description: delete a waypoint
+    usage: /wdelete
