@@ -18,23 +18,16 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static zoink.jule.waypoints.Commands.WSave.loadFile;
-
 public class Completer implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender cmdSender, Command cmd, String label, String[] args) {
         if (cmdSender instanceof Player) {
             Player player = (Player)cmdSender;
             File waypointFile = new File("waypoints/" + player.getName() + ".yml");
-            FileConfiguration waypoints = new YamlConfiguration();
+            FileConfiguration waypoints;
+            waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
-            try {
-                loadFile(waypointFile, waypoints);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Iterator iterator = waypoints.getKeys(true).iterator();
+            Iterator iterator = waypoints.getKeys(false).iterator();
             List<String> waypointList = new ArrayList<String>();
             while (iterator.hasNext())
                 waypointList.add(iterator.next().toString());

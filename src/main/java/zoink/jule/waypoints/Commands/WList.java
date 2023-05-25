@@ -1,5 +1,6 @@
 package zoink.jule.waypoints.Commands;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
 public class WList implements CommandExecutor {
     @Override
@@ -24,10 +26,11 @@ public class WList implements CommandExecutor {
             }
 
             File waypointFile = new File("waypoints/" + player.getName() + ".yml");
-            FileConfiguration waypoints = new YamlConfiguration();
+            FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
             player.sendMessage(ChatColor.GRAY + "~~~~~~~~~~~~~~~~~~~~");
-            for (String key : waypoints.getKeys(true)) {
+
+            for (String key : waypoints.getKeys(false)) {
                 String world = waypoints.getString(key + ".world");
                 ChatColor worldColor;
 
@@ -45,7 +48,14 @@ public class WList implements CommandExecutor {
                         worldColor = ChatColor.AQUA;
                 }
 
-                player.sendMessage(worldColor + key);
+                DecimalFormat decimalFormat = new DecimalFormat("#");
+
+                double x, y, z;
+                x = Double.parseDouble(decimalFormat.format(waypoints.getDouble(key + ".coordinates.x")));
+                y = Double.parseDouble(decimalFormat.format(waypoints.getDouble(key + ".coordinates.y")));
+                z = Double.parseDouble(decimalFormat.format(waypoints.getDouble(key + ".coordinates.z")));
+
+                player.sendMessage(worldColor + key + ChatColor.RESET + " : " + x + ", " + y + ", " + z);
             }
             player.sendMessage(ChatColor.GRAY + "~~~~~~~~~~~~~~~~~~~~");
         }
