@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public class WSave implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender cmdSender, Command cmd, String label, String[] args) {
         if (cmdSender instanceof Player) {
-            Player player = (Player)cmdSender;
+            Player player = (Player) cmdSender;
             if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
                 player.sendMessage(ChatColor.RED + "You do not have permissions to execute this command!");
                 return true;
@@ -31,33 +32,42 @@ public class WSave implements CommandExecutor {
                 return true;
             }
 
-            File waypointFile = new File("waypoints/"+player.getName()+".yml");
-            FileConfiguration waypoints = new YamlConfiguration();
+            File waypointFile = new File("waypoints/" + player.getName() + ".yml");
+            FileConfiguration waypoints;
+
+            if (!waypointFile.exists() || !waypointFile.isFile()) {
+                try {
+                    waypointFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
             try {
-                loadFile(waypointFile, waypoints);
+                waypoints.load(waypointFile);
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidConfigurationException e) {
                 e.printStackTrace();
             }
 
             // Save to File
             Location location = player.getLocation();
+
             waypoints.set(args[0] + ".coordinates.x", location.getX());
             waypoints.set(args[0] + ".coordinates.y", location.getY());
             waypoints.set(args[0] + ".coordinates.z", location.getZ());
-            waypoints.set(args[0] + ".world", location.getWorld());
+            waypoints.set(args[0] + ".world", location.getWorld().getName());
 
+            try {
+                waypoints.save(waypointFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             player.sendMessage(ChatColor.GREEN + "Saved Waypoint!");
         }
-        return true;
-    }
-
-    public static boolean loadFile(File waypointFile, FileConfiguration waypoints) throws IOException {
-        if (!waypointFile.exists() || !waypointFile.isFile()) {
-            waypointFile.createNewFile();
-        }
-
-        waypoints = YamlConfiguration.loadConfiguration(waypointFile);
         return true;
     }
 }
