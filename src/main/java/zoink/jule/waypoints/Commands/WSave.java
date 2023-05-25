@@ -9,6 +9,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.C;
 import org.yaml.snakeyaml.Yaml;
 import zoink.jule.waypoints.Utils.Permissions;
 
@@ -29,6 +30,12 @@ public class WSave implements CommandExecutor {
             if (args.length < 1) {
                 player.sendMessage(ChatColor.RED + "No name given!");
                 player.sendMessage(ChatColor.RED + "/wsave <name>");
+                return true;
+            }
+
+            if (args[0].contains(".")) {
+                player.sendMessage(ChatColor.RED + "Waypoint can not contain a period!");
+                player.sendMessage(ChatColor.RED + "Try changing it to: " + ChatColor.RESET + args[0].replace('.', '_'));
                 return true;
             }
 
