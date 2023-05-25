@@ -18,6 +18,6 @@ Waypoints Plugin for Minecraft (Paper)
 To build the plugin, type the following commands:
 
 ```bash
-cd SimpleWaypoints
+cd Waypoints
 mvn clean package
 ```
