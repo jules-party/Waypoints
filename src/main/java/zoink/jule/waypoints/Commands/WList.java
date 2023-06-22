@@ -25,7 +25,7 @@ public class WList implements CommandExecutor {
                 return true;
             }
 
-            File waypointFile = new File("waypoints/" + player.getName() + ".yml");
+            File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
             player.sendMessage(ChatColor.GRAY + "~~~~~~~~~~~~~~~~~~~~");

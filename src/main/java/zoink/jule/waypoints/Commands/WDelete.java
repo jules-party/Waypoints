@@ -33,7 +33,7 @@ public class WDelete implements CommandExecutor {
                 return true;
             }
 
-            File waypointFile = new File("waypoints/"+player.getName()+".yml");
+            File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
             System.out.println(waypoints.getKeys(false));
@@ -57,7 +57,7 @@ public class WDelete implements CommandExecutor {
     private boolean doesKeyExist(Set<String> waypoints) {
         List<String> list = new ArrayList<String>(waypoints);
         for (String key : waypoints) {
-            for (int i = 0; i < waypoints.size() - 1; i++) {
+            for (int i = 0; i < waypoints.size(); i++) {
                 if (key == list.get(i))
                     return true;
             }

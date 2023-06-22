@@ -23,7 +23,7 @@ public class Completer implements TabCompleter {
     public List<String> onTabComplete(CommandSender cmdSender, Command cmd, String label, String[] args) {
         if (cmdSender instanceof Player) {
             Player player = (Player)cmdSender;
-            File waypointFile = new File("waypoints/" + player.getName() + ".yml");
+            File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints;
             waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
