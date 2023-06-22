@@ -36,7 +36,7 @@ public class WTp implements CommandExecutor {
                 return true;
             }
 
-            File waypointsFile = new File("waypoints/" + player.getName() + ".yml");
+            File waypointsFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointsFile);
 
             if (waypoints.get(args[0]) == null) {
