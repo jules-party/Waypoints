@@ -39,7 +39,7 @@ public class WSave implements CommandExecutor {
                 return true;
             }
 
-            File waypointFile = new File("waypoints/" + player.getName() + ".yml");
+            File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints;
 
             if (!waypointFile.exists() || !waypointFile.isFile()) {
