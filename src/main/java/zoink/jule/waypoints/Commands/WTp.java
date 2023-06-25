@@ -5,8 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.Yaml;
-import zoink.jule.waypoints.Commands.WSave;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +15,8 @@ import zoink.jule.waypoints.Utils.TeleportUtils;
 
 import java.io.File;
 
+import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+
 public class WTp implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender cmdSender, Command cmd, String label, String[] args) {
@@ -26,13 +26,13 @@ public class WTp implements CommandExecutor {
             World world;
 
             if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-                player.sendMessage(ChatColor.RED + "You do not have permissions to execute this command!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
                 return true;
             }
 
             if (args.length < 1) {
-                player.sendMessage(ChatColor.RED + "No name given!");
-                player.sendMessage(ChatColor.RED + "/wsave <name>");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wsave <name>");
                 return true;
             }
 
@@ -40,7 +40,7 @@ public class WTp implements CommandExecutor {
             FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointsFile);
 
             if (waypoints.get(args[0]) == null) {
-                player.sendMessage(ChatColor.RED + "Waypoint doesn't exist!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint doesn't exist!");
                 return true;
             }
 
@@ -54,7 +54,7 @@ public class WTp implements CommandExecutor {
             Location location;
             location = new Location(world, x, y, z);
             TeleportUtils.teleportPlayer(player, location);
-            player.sendMessage(ChatColor.GREEN + "Teleported to waypoint: " + ChatColor.RESET + args[0]);
+            player.sendMessage(CHAT_PREFIX + ChatColor.GREEN + "Teleported to waypoint: " + ChatColor.RESET + args[0]);
         }
 
         return true;

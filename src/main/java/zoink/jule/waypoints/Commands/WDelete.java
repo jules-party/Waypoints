@@ -4,11 +4,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 
 import java.io.File;
@@ -17,19 +15,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+
 public class WDelete implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender cmdSender, Command cmd, String label, String[] args) {
+
+
         if (cmdSender instanceof Player) {
             Player player = (Player)cmdSender;
             if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-                player.sendMessage(ChatColor.RED + "You do not have permissions to execute this command!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED +"You do not have permissions to execute this command!");
                 return true;
             }
 
             if (args.length < 1) {
-                player.sendMessage(ChatColor.RED + "No name given!");
-                player.sendMessage(ChatColor.RED + "/wdelete <name>");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wdelete <name>");
                 return true;
             }
 
@@ -39,7 +41,7 @@ public class WDelete implements CommandExecutor {
             System.out.println(waypoints.getKeys(false));
 
             if (!doesKeyExist(waypoints.getKeys(false))) {
-                player.sendMessage(ChatColor.RED + "Waypoint doesn't exist!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED +"Waypoint doesn't exist!");
                 return true;
             }
 
@@ -49,7 +51,7 @@ public class WDelete implements CommandExecutor {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            player.sendMessage(ChatColor.GREEN + "Removed Waypoint: " + ChatColor.RESET + args[0]);
+            player.sendMessage(CHAT_PREFIX + ChatColor.GREEN + "Removed Waypoint: " + ChatColor.RESET + args[0]);
         }
         return true;
     }

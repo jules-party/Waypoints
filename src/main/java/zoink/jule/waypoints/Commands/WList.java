@@ -1,6 +1,5 @@
 package zoink.jule.waypoints.Commands;
 
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,11 +7,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 
 import java.io.File;
 import java.text.DecimalFormat;
+
+import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WList implements CommandExecutor {
     @Override
@@ -21,12 +21,17 @@ public class WList implements CommandExecutor {
             Player player = (Player) cmdSender;
 
             if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-                player.sendMessage(ChatColor.RED + "You do not have permissions to execute this command!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
                 return true;
             }
 
             File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
+
+            if (waypoints.getKeys(false).size() == 0) {
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No waypoints found!");
+                return true;
+            }
 
             player.sendMessage(ChatColor.GRAY + "~~~~~~~~~~~~~~~~~~~~");
 
