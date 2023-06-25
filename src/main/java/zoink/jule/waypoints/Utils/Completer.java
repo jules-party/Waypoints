@@ -28,7 +28,7 @@ public class Completer implements TabCompleter {
             waypoints = YamlConfiguration.loadConfiguration(waypointFile);
 
             Iterator iterator = waypoints.getKeys(false).iterator();
-            List<String> waypointList = new ArrayList<String>();
+            List<String> waypointList = new ArrayList<>();
             while (iterator.hasNext())
                 waypointList.add(iterator.next().toString());
 

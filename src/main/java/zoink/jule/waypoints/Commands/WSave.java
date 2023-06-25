@@ -9,13 +9,11 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.C;
-import org.yaml.snakeyaml.Yaml;
 import zoink.jule.waypoints.Utils.Permissions;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
+import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WSave implements CommandExecutor {
     @Override
@@ -23,19 +21,19 @@ public class WSave implements CommandExecutor {
         if (cmdSender instanceof Player) {
             Player player = (Player) cmdSender;
             if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-                player.sendMessage(ChatColor.RED + "You do not have permissions to execute this command!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
                 return true;
             }
 
             if (args.length < 1) {
-                player.sendMessage(ChatColor.RED + "No name given!");
-                player.sendMessage(ChatColor.RED + "/wsave <name>");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wsave <name>");
                 return true;
             }
 
             if (args[0].contains(".")) {
-                player.sendMessage(ChatColor.RED + "Waypoint can not contain a period!");
-                player.sendMessage(ChatColor.RED + "Try changing it to: " + ChatColor.RESET + args[0].replace('.', '_'));
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint can not contain a period!");
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Try changing it to: " + ChatColor.RESET + args[0].replace('.', '_'));
                 return true;
             }
 
@@ -73,7 +71,7 @@ public class WSave implements CommandExecutor {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            player.sendMessage(ChatColor.GREEN + "Saved Waypoint!");
+            player.sendMessage(CHAT_PREFIX + ChatColor.RESET + "Saved Waypoint!");
         }
         return true;
     }
