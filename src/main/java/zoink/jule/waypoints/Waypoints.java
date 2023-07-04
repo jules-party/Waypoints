@@ -27,7 +27,7 @@ public final class Waypoints extends JavaPlugin {
         createWaypointsDir();
         this.getCommand("wsave").setExecutor(new WSave());
 
-        this.getCommand("wlist").setExecutor(new WList());
+        this.getCommand("wlist").setExecutor(new WList(this));
 
         this.getCommand("whome").setExecutor(new WHome());
 

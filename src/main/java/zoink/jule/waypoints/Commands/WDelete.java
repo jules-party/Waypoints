@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WDelete implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender cmdSender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender cmdSender, @NotNull Command cmd, @NotNull String label, String[] args) {
 
 
         if (cmdSender instanceof Player) {
