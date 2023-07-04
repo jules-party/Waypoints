@@ -4,3 +4,8 @@ spawn:
   z: 0
   world: world
   enabled: true
+
+worlds:
+  overworld: world
+  nether: world_nether
+  end: world_the_end
