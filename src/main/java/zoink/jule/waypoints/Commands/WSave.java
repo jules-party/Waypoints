@@ -59,6 +59,12 @@ public class WSave implements CommandExecutor {
                 e.printStackTrace();
             }
 
+            // See if waypoint exists or not
+            if (waypoints.get(args[0]) != null) {
+                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint with the name: " + ChatColor.RESET + args[0] + ChatColor.RED + " already exists!");
+                return false;
+            }
+
             // Save to File
             Location location = player.getLocation();
 

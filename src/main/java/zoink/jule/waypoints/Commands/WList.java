@@ -50,7 +50,7 @@ public class WList implements CommandExecutor {
 
             if (Objects.equals(world, config.getString("worlds.overworld"))) worldColor = ChatColor.GREEN;
             if (Objects.equals(world, config.getString("worlds.nether"))) worldColor = ChatColor.GOLD;
-            if (Objects.equals(world, config.getString("worlds.end"))) worldColor = ChatColor.AQUA;
+            if (Objects.equals(world, config.getString("worlds.end"))) worldColor = ChatColor.LIGHT_PURPLE;
 
             DecimalFormat decimalFormat = new DecimalFormat("#");
             double x, y, z;
