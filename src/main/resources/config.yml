@@ -5,7 +5,20 @@ spawn:
   world: world
   enabled: true
 
-worlds:
-  overworld: world
-  nether: world_nether
-  end: world_the_end
+use_real_world_names: false
+multi_world_teleport: true
+
+allowed_worlds:
+  - world
+  - world_nether
+  - world_the_end
+
+allowed_worlds_colors:
+  - '&a'
+  - '&6'
+  - '&d'
+
+custom_world_names:
+  - Overworld
+  - Nether
+  - The End
