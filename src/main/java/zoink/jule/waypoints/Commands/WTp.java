@@ -13,50 +13,63 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 import zoink.jule.waypoints.Utils.TeleportUtils;
+import zoink.jule.waypoints.Waypoints;
 
 import java.io.File;
+import java.util.Objects;
 
 import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WTp implements CommandExecutor {
+    private final Waypoints plugin;
+
+    public WTp(Waypoints plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public boolean onCommand(@NotNull CommandSender cmdSender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (!(cmdSender instanceof Player))
+            return true;
 
-        if (cmdSender instanceof Player) {
-            Player player = (Player)cmdSender;
-            World world;
+        Player player = (Player)cmdSender;
+        World world;
 
-            if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
-                return true;
-            }
-
-            if (args.length < 1) {
-                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
-                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wsave <name>");
-                return true;
-            }
-
-            File waypointsFile = new File("waypoints/" + player.getUniqueId() + ".yml");
-            FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointsFile);
-
-            if (waypoints.get(args[0]) == null) {
-                player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint doesn't exist!");
-                return true;
-            }
-
-            double x, y, z;
-
-            x = waypoints.getDouble(args[0] + ".coordinates.x");
-            y = waypoints.getDouble(args[0] + ".coordinates.y");
-            z = waypoints.getDouble(args[0] + ".coordinates.z");
-            world = Bukkit.getWorld(waypoints.getString(args[0] + ".world"));
-
-            Location location;
-            location = new Location(world, x, y, z);
-            TeleportUtils.teleportPlayer(player, location);
-            player.sendMessage(CHAT_PREFIX + ChatColor.GREEN + "Teleported to waypoint: " + ChatColor.RESET + args[0]);
+        if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
+            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
+            return true;
         }
+
+        if (args.length < 1) {
+            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
+            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wsave <name>");
+            return true;
+        }
+
+        File waypointsFile = new File("waypoints/" + player.getUniqueId() + ".yml");
+        FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointsFile);
+
+        if (waypoints.get(args[0]) == null) {
+            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint doesn't exist!");
+            return true;
+        }
+
+        double x, y, z;
+        x = waypoints.getDouble(args[0] + ".coordinates.x");
+        y = waypoints.getDouble(args[0] + ".coordinates.y");
+        z = waypoints.getDouble(args[0] + ".coordinates.z");
+
+        world = Bukkit.getWorld(waypoints.getString(args[0] + ".world"));
+        Location location;
+        location = new Location(world, x, y, z);
+
+        if (!plugin.getConfig().getBoolean("multi_world_teleport")
+            && !Objects.equals(waypoints.getString(args[0] + ".world"), player.getWorld().getName())) {
+            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Multi World Teleport is not enabled on this server!");
+            return true;
+        }
+
+        TeleportUtils.teleportPlayer(player, location);
+        player.sendMessage(CHAT_PREFIX + ChatColor.GREEN + "Teleported to waypoint: " + ChatColor.RESET + args[0]);
 
         return true;
     }

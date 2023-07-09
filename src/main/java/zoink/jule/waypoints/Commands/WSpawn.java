@@ -12,9 +12,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.TeleportUtils;
 import zoink.jule.waypoints.Waypoints;
-
 import java.util.Objects;
-
 import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WSpawn implements CommandExecutor {
@@ -23,11 +21,13 @@ public class WSpawn implements CommandExecutor {
     public WSpawn(Waypoints plugin) {
         this.plugin = plugin;
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender cmdSender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(cmdSender instanceof Player))
-            return false;
+            return true;
 
+        plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
         Player player = (Player)cmdSender;
         World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("spawn.world")));

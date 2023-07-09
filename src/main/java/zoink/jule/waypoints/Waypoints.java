@@ -1,18 +1,20 @@
 package zoink.jule.waypoints;
 
 import java.io.File;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import zoink.jule.waypoints.Commands.*;
-import zoink.jule.waypoints.Utils.Completer;
+import zoink.jule.waypoints.Utils.WaypointCompleter;
+import zoink.jule.waypoints.Utils.TeleportUtils;
+import zoink.jule.waypoints.Utils.WorldCompleter;
 
 public final class Waypoints extends JavaPlugin {
     public static final String CHAT_PREFIX = ChatColor.GREEN + "WP" + ChatColor.BLUE + "> " + ChatColor.RESET;
     public static final Logger LOGGER = Bukkit.getLogger();
+    private TeleportUtils teleportUtils;
 
     @Override
     public void onEnable() {
@@ -25,20 +27,20 @@ public final class Waypoints extends JavaPlugin {
         LOGGER.info("Waypoints Enabled!");
 
         createWaypointsDir();
-        this.getCommand("wsave").setExecutor(new WSave());
-
-        this.getCommand("wlist").setExecutor(new WList(this));
+        this.getCommand("wsave").setExecutor(new WSave(this));
 
         this.getCommand("whome").setExecutor(new WHome());
 
         this.getCommand("wspawn").setExecutor(new WSpawn(this));
 
-        this.getCommand("wtp").setExecutor(new WTp());
-        this.getCommand("wtp").setTabCompleter(new Completer());
+        this.getCommand("wlist").setExecutor(new WList(this));
+        this.getCommand("wlist").setTabCompleter(new WorldCompleter(this));
 
+        this.getCommand("wtp").setExecutor(new WTp(this));
+        this.getCommand("wtp").setTabCompleter(new WaypointCompleter(this));
 
         this.getCommand("wdelete").setExecutor(new WDelete());
-        this.getCommand("wdelete").setTabCompleter(new Completer());
+        this.getCommand("wdelete").setTabCompleter(new WaypointCompleter(this));
     }
 
     private void createWaypointsDir() {
@@ -46,6 +48,10 @@ public final class Waypoints extends JavaPlugin {
 
         if (!dir.exists() || !dir.isDirectory())
             dir.mkdirs();
+    }
+
+    public TeleportUtils getTeleportUtils() {
+        return teleportUtils;
     }
 
     @Override

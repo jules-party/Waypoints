@@ -1,7 +1,7 @@
 name: Waypoints
 version: '${project.version}'
 author: jule
-api-version: 1.14
+api-version: 1.16
 main: zoink.jule.waypoints.Waypoints
 commands:
   wsave:

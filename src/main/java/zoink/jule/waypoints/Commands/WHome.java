@@ -9,14 +9,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 import zoink.jule.waypoints.Utils.TeleportUtils;
-
 import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WHome implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender cmdSender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(cmdSender instanceof Player))
-            return false;
+            return true;
 
         Player player = (Player)cmdSender;
         Location playerSpawn;
