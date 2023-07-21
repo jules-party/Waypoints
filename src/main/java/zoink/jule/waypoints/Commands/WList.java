@@ -20,7 +20,6 @@ import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
 
 public class WList implements CommandExecutor {
     private final Waypoints plugin;
-
     public WList(Waypoints plugin) {
         this.plugin = plugin;
     }
