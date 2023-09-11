@@ -1,7 +1,6 @@
 package zoink.jule.waypoints;
 
 import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
-import static zoink.jule.waypoints.Waypoints.LOGGER;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -19,11 +18,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
 
 public class WaypointsListener implements Listener {
     private final Waypoints plugin;
