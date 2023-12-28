@@ -1,7 +1,6 @@
 package zoink.jule.waypoints.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,14 +10,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import zoink.jule.waypoints.Utils.Permissions;
 import zoink.jule.waypoints.Utils.TeleportUtils;
 import zoink.jule.waypoints.Waypoints;
 
 import java.io.File;
 import java.util.Objects;
 
-import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+import static zoink.jule.waypoints.Waypoints.*;
 
 public class WTp implements CommandExecutor {
     private final Waypoints plugin;
@@ -34,14 +32,11 @@ public class WTp implements CommandExecutor {
         Player player = (Player)cmdSender;
         World world;
 
-        if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
-            return true;
-        }
+        checkPermissions(player);
 
         if (args.length < 1) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wsave <name>");
+            sendMessage(player, "<red>No name given!</red>");
+            sendMessage(player, "<red>/wtp <name></red>");
             return true;
         }
 
@@ -49,7 +44,7 @@ public class WTp implements CommandExecutor {
         FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointsFile);
 
         if (waypoints.get(args[0]) == null) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint doesn't exist!");
+            sendMessage(player, "<red>Waypoint doesn't exist!</red>");
             return true;
         }
 
@@ -58,18 +53,18 @@ public class WTp implements CommandExecutor {
         y = waypoints.getDouble(args[0] + ".coordinates.y");
         z = waypoints.getDouble(args[0] + ".coordinates.z");
 
-        world = Bukkit.getWorld(waypoints.getString(args[0] + ".world"));
+        world = Bukkit.getWorld(Objects.requireNonNull(waypoints.getString(args[0] + ".world")));
         Location location;
         location = new Location(world, x, y, z);
 
         if (!plugin.getConfig().getBoolean("multi_world_teleport")
             && !Objects.equals(waypoints.getString(args[0] + ".world"), player.getWorld().getName())) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Multi World Teleport is not enabled on this server!");
+            sendMessage(player, "<red>Multi World Teleport is not enabled on this server!</red>");
             return true;
         }
 
         TeleportUtils.teleportPlayer(player, location);
-        player.sendMessage(CHAT_PREFIX + ChatColor.GREEN + "Teleported to waypoint: " + ChatColor.RESET + args[0]);
+        sendMessage(player, "<green>Teleported to waypoint: </green>" + args[0]);
 
         return true;
     }

@@ -11,7 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.Permissions;
 import java.io.File;
 import java.io.IOException;
-import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+import java.util.Arrays;
+
+import static zoink.jule.waypoints.Waypoints.*;
 
 public class WDelete implements CommandExecutor {
     @Override
@@ -20,28 +22,27 @@ public class WDelete implements CommandExecutor {
             return true;
 
         Player player = (Player)cmdSender;
-        if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED +"You do not have permissions to execute this command!");
-            return true;
-        }
+        checkPermissions(player);
+
         if (args.length < 1) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wdelete <name>");
+            sendMessage(player, "<red>No name given!</red>");
+            sendMessage(player, "<red>/wdelete <name></red>");
             return true;
         }
         File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
         FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
         System.out.println(waypoints.getKeys(false));
         if (waypoints.get(args[0]) == null) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED +"Waypoint doesn't exist!");
+            sendMessage(player, "<red>Waypoint doesn't exist!</red>");
             return true;
         }
         waypoints.set(args[0], null);
         try {
             waypoints.save(waypointFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning(Arrays.toString(e.getStackTrace()));
         }
+        sendMessage(player, "<green>Removed Waypoint: </green>" + args[0]);
         player.sendMessage(CHAT_PREFIX + ChatColor.GREEN + "Removed Waypoint: " + ChatColor.RESET + args[0]);
 
         return true;

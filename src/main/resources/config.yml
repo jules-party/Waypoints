@@ -14,9 +14,9 @@ allowed_worlds:
   - world_the_end
 
 allowed_worlds_colors:
-  - '&a'
-  - '&6'
-  - '&d'
+  - 'green'
+  - 'gold'
+  - 'light_purple'
 
 custom_world_names:
   - Overworld

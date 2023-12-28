@@ -1,7 +1,6 @@
 package zoink.jule.waypoints.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -14,6 +13,7 @@ import zoink.jule.waypoints.Utils.TeleportUtils;
 import zoink.jule.waypoints.Waypoints;
 import java.util.Objects;
 import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+import static zoink.jule.waypoints.Waypoints.sendMessage;
 
 public class WSpawn implements CommandExecutor {
     private final Waypoints plugin;
@@ -33,13 +33,13 @@ public class WSpawn implements CommandExecutor {
         World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("spawn.world")));
 
         if (!config.getBoolean("spawn.enabled")) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "This command is not enabled on this server!");
+            sendMessage(player, "<red>This command is not enabled on this server!</red>");
             return true;
         }
 
         if (args.length > 0) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "This Command Doesn't Accept Arguments!");
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wspawn");
+            sendMessage(player, "<red>This command doesn't accept arguments!</red>");
+            sendMessage(player, "<red>/wspawn</red>");
             return true;
         }
 

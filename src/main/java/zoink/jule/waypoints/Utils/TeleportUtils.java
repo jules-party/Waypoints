@@ -10,6 +10,7 @@ public class TeleportUtils {
     public static void teleportPlayer(Player player, Location location) {
         if (player.isInsideVehicle()) {
             Entity vehicle = player.getVehicle();
+            assert vehicle != null;
             List<Entity> passengers = vehicle.getPassengers();
 
             vehicle.eject();
