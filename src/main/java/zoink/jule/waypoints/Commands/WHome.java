@@ -1,15 +1,14 @@
 package zoink.jule.waypoints.Commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import zoink.jule.waypoints.Utils.Permissions;
 import zoink.jule.waypoints.Utils.TeleportUtils;
-import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+
+import static zoink.jule.waypoints.Waypoints.*;
 
 public class WHome implements CommandExecutor {
     @Override
@@ -20,26 +19,23 @@ public class WHome implements CommandExecutor {
         Player player = (Player)cmdSender;
         Location playerSpawn;
 
-        if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
-            return true;
-        }
+        checkPermissions(player);
 
         if (args.length > 1) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "This Command Doesn't Accept Arguments!");
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/whome");
+            sendMessage(player, "<red>This command does not accept arguments!</red>");
+            sendMessage(player, "<red>/whome</red>");
             return true;
         }
 
         if (player.getBedSpawnLocation() == null) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED +"You do not have a spawnpoint set!");
+            sendMessage(player, "<red>You do no have a spawnpoint set!</red>");
             return true;
         } else {
             playerSpawn = player.getBedSpawnLocation();
         }
 
         TeleportUtils.teleportPlayer(player, playerSpawn);
-        player.sendMessage(CHAT_PREFIX + ChatColor.WHITE + "Teleported to Spawnpoint");
+        sendMessage(player, "Teleported to Spawnpoint");
 
         return true;
     }

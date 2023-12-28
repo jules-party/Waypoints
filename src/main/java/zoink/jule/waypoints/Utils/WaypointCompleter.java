@@ -32,14 +32,14 @@ public class WaypointCompleter implements TabCompleter {
         FileConfiguration waypoints;
 
         waypoints = YamlConfiguration.loadConfiguration(waypointFile);
-        Iterator iterator = waypoints.getKeys(false).iterator();
+        Iterator<String> iterator = waypoints.getKeys(false).iterator();
         List<String> waypointList = new ArrayList<>();
 
         while (iterator.hasNext())
-            waypointList.add(iterator.next().toString());
+            waypointList.add(iterator.next());
 
         if (!plugin.getConfig().getBoolean("multi_world_teleport")) {
-            List<String> worldWaypointsList = new ArrayList<String>();
+            List<String> worldWaypointsList = new ArrayList<>();
             for (String waypoint : waypointList)
                 if (Objects.equals(waypoints.getString(waypoint + ".world"), player.getWorld().getName()))
                     worldWaypointsList.add(waypoint);

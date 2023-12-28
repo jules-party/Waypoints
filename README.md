@@ -34,7 +34,7 @@ Waypoints Plugin for Minecraft (Paper)
 - The order of the worlds is the order they will be printed out in when a player runs `/wlist`.
 
 ### Allowed Worlds Colors
-- The colors are based on the [Bukkit Color Codes](https://htmlcolorcodes.com/bukkit-color-codes/)
+- The colors are based on the [MiniMessage Colors](https://docs.advntr.dev/minimessage/format.html#color)
 - The order of the colors is the same as the ones in the `allowed_worlds` list.
 
 ### Custom World Names

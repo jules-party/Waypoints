@@ -1,6 +1,5 @@
 package zoink.jule.waypoints.Commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,12 +9,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import zoink.jule.waypoints.Utils.Permissions;
 import zoink.jule.waypoints.Waypoints;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
-import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
+
+import static zoink.jule.waypoints.Waypoints.*;
 
 public class WSave implements CommandExecutor {
     private final Waypoints plugin;
@@ -30,20 +30,17 @@ public class WSave implements CommandExecutor {
             return true;
 
         Player player = (Player) cmdSender;
-        if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You do not have permissions to execute this command!");
-            return true;
-        }
+        checkPermissions(player);
 
         if (args.length < 1) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "No name given!");
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "/wsave <name>");
+            sendMessage(player, "<red>No name given!</red>");
+            sendMessage(player, "<red>/wsave <name></red>");
             return true;
         }
 
         if (args[0].contains(".")) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint can not contain a period!");
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Try changing it to: " + ChatColor.RESET + args[0].replace('.', '_'));
+            sendMessage(player, "<red>Waypoint can not contain a peroid!</red>");
+            sendMessage(player, "<red>Try changing it to: </red>" + args[0].replace('.', '_'));
             return true;
         }
 
@@ -52,9 +49,12 @@ public class WSave implements CommandExecutor {
 
         if (!waypointFile.exists() || !waypointFile.isFile()) {
             try {
-                waypointFile.createNewFile();
+                boolean fileCreated = waypointFile.createNewFile();
+                if (!fileCreated) {
+                    throw new IOException("Unable to create waypoints file!");
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.warning(Arrays.toString(e.getStackTrace()));
             }
         }
 
@@ -62,21 +62,19 @@ public class WSave implements CommandExecutor {
 
         try {
             waypoints.load(waypointFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
-            e.printStackTrace();
+        } catch (IOException | InvalidConfigurationException e) {
+            LOGGER.warning(Arrays.toString(e.getStackTrace()));
         }
 
         List<String> worlds = plugin.getConfig().getStringList("allowed_worlds");
         if (!worlds.contains(player.getWorld().getName())) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "You are not permitted to save waypoints in this world!");
+            sendMessage(player, "<red>You are not permiited to save waypoints in this world!</red>");
             return true;
         }
 
         // See if waypoint exists or not
         if (waypoints.get(args[0]) != null) {
-            player.sendMessage(CHAT_PREFIX + ChatColor.RED + "Waypoint with the name: " + ChatColor.RESET + args[0] + ChatColor.RED + " already exists!");
+            sendMessage(player, "<red>Waypoint with the name: </red>" + args[0] + " <red>already exists!</red>");
             return true;
         }
 
@@ -91,9 +89,9 @@ public class WSave implements CommandExecutor {
         try {
             waypoints.save(waypointFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning(Arrays.toString(e.getStackTrace()));
         }
-        player.sendMessage(CHAT_PREFIX + ChatColor.RESET + "Saved Waypoint!");
+        sendMessage(player, "Saved Waypoint!");
 
         return true;
     }
