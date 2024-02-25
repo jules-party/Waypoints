@@ -68,7 +68,7 @@ public class WSave implements CommandExecutor {
 
         List<String> worlds = plugin.getConfig().getStringList("allowed_worlds");
         if (!worlds.contains(player.getWorld().getName())) {
-            sendMessage(player, "<red>You are not permiited to save waypoints in this world!</red>");
+            sendMessage(player, "<red>You are not permited to save waypoints in this world!</red>");
             return true;
         }
 
