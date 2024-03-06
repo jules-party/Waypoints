@@ -44,6 +44,19 @@ public class WSave implements CommandExecutor {
             return true;
         }
 
+        if (plugin.getConfig().getBoolean("limited_waypoints")) {
+            File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
+            FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
+
+            int waypointCount = waypoints.getKeys(false).size();
+            if (waypointCount >= plugin.getConfig().getInt("max_waypoints") ) {
+                sendMessage(player, "<red>You have the max amount of waypoints already!</red>");
+                sendMessage(player, "<red>Max Waypoints</red>: " + plugin.getConfig().getInt("max_waypoints"));
+
+                return true;
+            }
+        }
+
         File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
         FileConfiguration waypoints;
 

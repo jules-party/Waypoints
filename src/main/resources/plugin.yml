@@ -22,3 +22,9 @@ commands:
   wspawn:
     description: teleport to the specified spawn location set the server owner
     usage: /wspawn
+  wconfig:
+    description: operators can modify the config while in game, config reloads after changes
+    usage: /wconfig
+  wsetup:
+    description: automatically setups config.yml if needed
+    usage: /wsetup

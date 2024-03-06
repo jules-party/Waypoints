@@ -3,10 +3,13 @@ spawn:
   y: 100
   z: 0
   world: world
-  enabled: true
+  enabled: false
 
 use_real_world_names: false
 multi_world_teleport: true
+
+limited_waypoints: false
+max_waypoints: 10
 
 allowed_worlds:
   - world

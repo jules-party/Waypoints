@@ -56,7 +56,7 @@ public class WSpawn implements CommandExecutor {
         );
 
         TeleportUtils.teleportPlayer(player, spawnLocation);
-        player.sendMessage(CHAT_PREFIX + "Teleported to Spawn!");
+        sendMessage(player, "Teleported to Spawn!");
 
         return true;
     }
