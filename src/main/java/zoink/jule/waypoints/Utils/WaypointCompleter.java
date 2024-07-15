@@ -28,6 +28,8 @@ public class WaypointCompleter implements TabCompleter {
 
         plugin.reloadConfig();
         Player player = (Player)cmdSender;
+
+        // Load players waypoints
         File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
         FileConfiguration waypoints;
 

@@ -40,14 +40,17 @@ public class WTp implements CommandExecutor {
             return true;
         }
 
+        // Load players waypoints
         File waypointsFile = new File("waypoints/" + player.getUniqueId() + ".yml");
         FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointsFile);
 
+        // Check if waypoint exist
         if (waypoints.get(args[0]) == null) {
             sendMessage(player, "<red>Waypoint doesn't exist!</red>");
             return true;
         }
 
+        // Get the coordinates of the waypoint
         double x, y, z;
         x = waypoints.getDouble(args[0] + ".coordinates.x");
         y = waypoints.getDouble(args[0] + ".coordinates.y");

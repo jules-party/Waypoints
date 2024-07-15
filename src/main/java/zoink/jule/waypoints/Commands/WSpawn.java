@@ -43,6 +43,8 @@ public class WSpawn implements CommandExecutor {
             return true;
         }
 
+        // I don't feel the need to really comment on the file, as it's pretty self-explanatory,
+        // but basically get the spawn coords defined in the config, then teleport the player to those coords.
         double[] spawnCoords = {
                 plugin.getConfig().getDouble("spawn.x"),
                 plugin.getConfig().getDouble("spawn.y"),

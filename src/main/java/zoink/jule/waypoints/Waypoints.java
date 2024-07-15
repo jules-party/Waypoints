@@ -26,10 +26,13 @@ public final class Waypoints extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
+        // Say hi to the server
         LOGGER.info("[Waypoints] hiiii :3");
         LOGGER.info("[Waypoints] Waypoints Enabled!");
 
         createWaypointsDir();
+
+        // Register commands and listener
         this.getCommand("wsave").setExecutor(new WSave(this));
 
         this.getCommand("whome").setExecutor(new WHome());

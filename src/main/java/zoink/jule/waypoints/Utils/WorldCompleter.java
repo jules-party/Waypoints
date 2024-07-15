@@ -24,6 +24,7 @@ public class WorldCompleter implements TabCompleter {
         if (!(cmdSender instanceof Player))
             return null;
 
+        // If use_real_world_names is true, then we use the custom names defined in the config.
         List<String> worldNames = plugin.getConfig().getBoolean("use_real_world_names") ?
                 plugin.getConfig().getStringList("allowed_worlds") :
                 plugin.getConfig().getStringList("custom_world_names");

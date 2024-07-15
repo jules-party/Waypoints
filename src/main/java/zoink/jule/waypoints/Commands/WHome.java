@@ -27,6 +27,7 @@ public class WHome implements CommandExecutor {
             return true;
         }
 
+        // Check if player has a spawn point set
         if (player.getBedSpawnLocation() == null) {
             sendMessage(player, "<red>You do no have a spawnpoint set!</red>");
             return true;

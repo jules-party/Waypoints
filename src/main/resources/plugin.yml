@@ -1,6 +1,7 @@
 name: Waypoints
 version: '${project.version}'
 author: jule
+description: 'Simple Waypoints plugin'
 api-version: 1.20
 main: zoink.jule.waypoints.Waypoints
 commands:

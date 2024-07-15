@@ -39,9 +39,12 @@ public class WList implements CommandExecutor {
             return true;
         }
 
+        // Allowed worlds is the worlds that waypoints are allowed to be saved in.
         List<String> allowedWorlds = config.getStringList("allowed_worlds");
         List<String> allowedWorldsColors = config.getStringList("allowed_worlds_colors");
 
+        // If the sender did NOT specify worlds they want waypoints listed from
+        // we go through EACH world and list them to the user
         if (args.length == 0) {
             player.sendMessage(MM.deserialize("<gray>~~~~~~</gray><green>Waypoints</green><gray>~~~~~~</gray>"));
             for (String allowedWorld : allowedWorlds) {
@@ -59,18 +62,24 @@ public class WList implements CommandExecutor {
                         y = Double.parseDouble(decimalFormat.format(waypoints.getDouble(key + ".coordinates.y")));
                         z = Double.parseDouble(decimalFormat.format(waypoints.getDouble(key + ".coordinates.z")));
 
-
+                        // Replace the string ".REPLACE." with the specified world color defined in the config
                         msg = "<.REPLACE.>" + key + "</.REPLACE.>: " + x + ", " + y + ", " + z;
                         msg = msg.replaceAll(".REPLACE.",  worldColor);
 
                         messages.add(msg);
                     }
                 }
+                // Sort alphabetically, this is for each world and helps give a nice looking sorted output.
                 Collections.sort(messages);
 
                 for (String msg : messages) player.sendMessage(MM.deserialize(msg));
             }
             player.sendMessage(MM.deserialize("<gray>~~~~~~~~~~~~~~~~~~~~~</gray>"));
+
+        // Allows the sender to get the waypoints from a specific world, for example
+        // only getting the waypoints saved in The End world.
+        // Also, a lot of this code repeats the above  code, just shorter as we are only aiming at a specific world
+        // TODO: Add the ability for the sender to add multiple worlds
         } else if (args.length < 2) {
 
             String world = args[0];

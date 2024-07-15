@@ -43,17 +43,24 @@ public class WSetup implements CommandExecutor {
         FileConfiguration config = plugin.getConfig();
         File configFile = new File(plugin.getDataFolder() + "/config.yml");
 
+        // Get the names of all the worlds (ex. Overworld, Nether, and The End)
         for(World w : worldObjects) {
             worlds.add(w.getName());
         }
 
+        // Automatically let every world have the ability to have waypoints saved in it
         config.set("allowed_worlds", worlds);
 
+        // Usually the default world name is just 'world', but for example
+        // if a server owner is hosting on something like Apex Hosting. The
+        // world name may be different from the standard 'world'.
         String defaultWorldName = worlds.get(0);
         List<String> colors = config.getStringList("allowed_worlds_colors");
         List<String> worldNames = config.getStringList("custom_world_names");
         List<String> cutWorlds = worlds.subList(3, worlds.size());
 
+        // If a server has more than the standard amount of worlds (3),
+        // then we add them to the world names and give them the default color yellow.
         for (String worldName : cutWorlds) {
             worldNames.add(
                     WordUtils.capitalize(worldName
@@ -68,6 +75,7 @@ public class WSetup implements CommandExecutor {
         config.set("allowed_worlds_colors", colors);
         config.set("custom_world_names", worldNames);
 
+        // Basically the same thing you see in WConfig.java
         for(String arg : args) {
             if(arg.contains("=")) {
                 String[] properties = arg.split("=");

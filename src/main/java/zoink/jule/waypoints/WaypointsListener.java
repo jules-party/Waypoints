@@ -27,6 +27,7 @@ public class WaypointsListener implements Listener {
         PluginMeta pm = plugin.getPluginMeta();
         String url = "https://raw.githubusercontent.com/jules-party/Waypoints/main/pom.xml";
 
+        // This whole thingamabob basically see's if we are running on the latest version of the plugin.
         DocumentBuilderFactory dBf = DocumentBuilderFactory.newInstance();
         DocumentBuilder dB = dBf.newDocumentBuilder();
         Document document = dB.parse(new URL(url).openStream());

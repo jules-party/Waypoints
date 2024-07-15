@@ -27,13 +27,16 @@ public class WDelete implements CommandExecutor {
             sendMessage(player, "<red>/wdelete <name></red>");
             return true;
         }
+
+        // Get the players waypoint file
         File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
         FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
-        System.out.println(waypoints.getKeys(false));
+        // Check if the waypoint the player wants to delete even exist
         if (waypoints.get(args[0]) == null) {
             sendMessage(player, "<red>Waypoint doesn't exist!</red>");
             return true;
         }
+        // Setting the waypoint to null removes it from the file
         waypoints.set(args[0], null);
         try {
             waypoints.save(waypointFile);

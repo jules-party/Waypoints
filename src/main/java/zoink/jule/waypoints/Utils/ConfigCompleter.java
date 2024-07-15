@@ -15,6 +15,7 @@ public class ConfigCompleter implements TabCompleter {
     public ConfigCompleter(Waypoints plugin) {
         this.plugin = plugin;
     }
+    // Used for WConfig.java and WSetup.java for tab completion for variables found in config.yaml
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender cmdSender, @NotNull Command cmd, @NotNull String label, String[] args) {

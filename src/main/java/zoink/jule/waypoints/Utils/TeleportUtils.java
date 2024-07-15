@@ -13,6 +13,7 @@ public class TeleportUtils {
             assert vehicle != null;
             List<Entity> passengers = vehicle.getPassengers();
 
+            // I've tested this a lot and it works *okay*
             vehicle.eject();
             vehicle.teleport(location);
 

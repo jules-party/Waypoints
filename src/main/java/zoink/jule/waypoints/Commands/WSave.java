@@ -38,12 +38,16 @@ public class WSave implements CommandExecutor {
             return true;
         }
 
+        // Users are not allowed to use periods cause that's how we parse through the yaml tree
+        // Yes, in theory it would work, but it's a personal choice of mine.
+        // If you don't like it, fork and patch or start an issue.
         if (args[0].contains(".")) {
-            sendMessage(player, "<red>Waypoint can not contain a peroid!</red>");
+            sendMessage(player, "<red>Waypoint can not contain a period!</red>");
             sendMessage(player, "<red>Try changing it to: </red>" + args[0].replace('.', '_'));
             return true;
         }
 
+        // See if the sender is out of allowed saved waypoints.
         if (plugin.getConfig().getBoolean("limited_waypoints")) {
             File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
             FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);
@@ -79,9 +83,9 @@ public class WSave implements CommandExecutor {
             LOGGER.warning(Arrays.toString(e.getStackTrace()));
         }
 
-        List<String> worlds = plugin.getConfig().getStringList("allowed_worlds");
-        if (!worlds.contains(player.getWorld().getName())) {
-            sendMessage(player, "<red>You are not permited to save waypoints in this world!</red>");
+        List<String> allowedWorlds = plugin.getConfig().getStringList("allowed_worlds");
+        if (!allowedWorlds.contains(player.getWorld().getName())) {
+            sendMessage(player, "<red>You are not permitted to save waypoints in this world!</red>");
             return true;
         }
 
