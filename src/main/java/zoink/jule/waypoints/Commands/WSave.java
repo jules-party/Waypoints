@@ -30,7 +30,7 @@ public class WSave implements CommandExecutor {
             return true;
 
         Player player = (Player) cmdSender;
-        checkPermissions(player);
+        if(!checkPermissions(player)) return false;
 
         if (args.length < 1) {
             sendMessage(player, "<red>No name given!</red>");

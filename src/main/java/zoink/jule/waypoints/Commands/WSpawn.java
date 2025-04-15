@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import zoink.jule.waypoints.Utils.TeleportUtils;
 import zoink.jule.waypoints.Waypoints;
 import java.util.Objects;
-import static zoink.jule.waypoints.Waypoints.CHAT_PREFIX;
-import static zoink.jule.waypoints.Waypoints.sendMessage;
+
+import static zoink.jule.waypoints.Waypoints.*;
 
 public class WSpawn implements CommandExecutor {
     private final Waypoints plugin;
@@ -27,10 +27,13 @@ public class WSpawn implements CommandExecutor {
         if (!(cmdSender instanceof Player))
             return true;
 
+
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
         Player player = (Player)cmdSender;
         World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("spawn.world")));
+
+        if(!checkPermissions(player)) return false;
 
         if (!config.getBoolean("spawn.enabled")) {
             sendMessage(player, "<red>This command is not enabled on this server!</red>");

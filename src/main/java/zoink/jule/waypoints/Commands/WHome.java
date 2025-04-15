@@ -19,7 +19,7 @@ public class WHome implements CommandExecutor {
         Player player = (Player)cmdSender;
         Location playerSpawn;
 
-        checkPermissions(player);
+        if(!checkPermissions(player)) return false;
 
         if (args.length > 1) {
             sendMessage(player, "<red>This command does not accept arguments!</red>");

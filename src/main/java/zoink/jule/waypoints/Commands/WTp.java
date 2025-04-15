@@ -32,7 +32,7 @@ public class WTp implements CommandExecutor {
         Player player = (Player)cmdSender;
         World world;
 
-        checkPermissions(player);
+        if(!checkPermissions(player)) return false;
 
         if (args.length < 1) {
             sendMessage(player, "<red>No name given!</red>");

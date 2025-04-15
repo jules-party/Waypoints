@@ -30,7 +30,7 @@ public class WList implements CommandExecutor {
         plugin.reloadConfig();
         Player player = (Player) cmdSender;
         FileConfiguration config = plugin.getConfig();
-        checkPermissions(player);
+        if(!checkPermissions(player)) return false;
 
         File waypointFile = new File("waypoints/" + player.getUniqueId() + ".yml");
         FileConfiguration waypoints = YamlConfiguration.loadConfiguration(waypointFile);

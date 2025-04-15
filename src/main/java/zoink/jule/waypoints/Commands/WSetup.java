@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import zoink.jule.waypoints.Utils.Permissions;
 import zoink.jule.waypoints.Waypoints;
 
 import java.io.File;
@@ -31,7 +32,7 @@ public class WSetup implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender cmdSender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if(!(cmdSender instanceof Player)) {
             return true;
-        } else if(!cmdSender.isOp()) {
+        } else if(!cmdSender.hasPermission(Permissions.ADMIN.permission)) {
             sendMessage((Player)cmdSender, "<red>You are not a server operator!</red>");
             return true;
         }

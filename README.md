@@ -16,7 +16,7 @@ Waypoints Plugin for Minecraft (Paper)
 ## Permissions:
 
 - **zoink.waypoints**: Allow the user to use the personal waypoints.
-- Server Operator for some commands.
+- **zoink.waypoints.admin**: Allow admins to configure/setup plugin through `wconfig` or `wsetup`
 
 ## Config.yml
 ### For Lazy People

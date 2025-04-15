@@ -82,9 +82,11 @@ public final class Waypoints extends JavaPlugin {
                 .clickEvent(ClickEvent.openUrl(url)));
     }
 
-    public static void checkPermissions(Player player) {
+    public static boolean checkPermissions(Player player) {
         if (!player.hasPermission(Permissions.WAYPOINTS.permission)) {
             sendMessage(player, "<red>You do not have permissions to execute this command!<red>");
+            return false;
         }
+        return true;
     }
 }

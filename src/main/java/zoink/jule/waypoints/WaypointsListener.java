@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import zoink.jule.waypoints.Utils.Permissions;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,7 +36,7 @@ public class WaypointsListener implements Listener {
         final String runningVersion = pm.getVersion();
 
         if (!runningVersion.equals(currentVersion)) {
-            if (player.isOp()) {
+            if (player.hasPermission(Permissions.ADMIN.permission)) {
                 player.sendMessage(MM.deserialize(CHAT_PREFIX + "<red>Current running version: </red>" + runningVersion));
                 player.sendMessage(MM.deserialize(CHAT_PREFIX + "<red>Plugin is outdated! Update to version: </red>" + currentVersion));
                 sendUrlMessage(player, "Click me to get latest release of Waypoints!", "https://github.com/jules-party/Waypoints/releases/latest");
