@@ -1,3 +1,6 @@
+# ⚠️ **ATTENTION** PROJECT HAS MOVED TO SOURCEHUT (sr.ht)
+# [LINK TO NEW PROJECT PAGE](https://git.sr.ht/~cru/Waypoints)
+
 # Waypoints
 Waypoints Plugin for Minecraft (Paper)
 
